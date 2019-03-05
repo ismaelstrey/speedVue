@@ -3,7 +3,7 @@
     <div class="nav-wrapper container">
       <a :href="url || '#'" class="brand-logo">{{logo || 'SpeedSul'}}</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <slot name="links"></slot>
+        <slot name="links"/>
       </ul>
     </div>
   </nav>

@@ -1,18 +1,19 @@
 <template>
   <span id="app">
     <header>
-      <NavBar logo="SpeedSul " url="/" cor="#424242 grey darken-3"/>
-      <slot name="links">
-        <li>
-          <a href="sass.html">Sass</a>
-        </li>
-        <li>
-          <a href="badges.html">Components</a>
-        </li>
-        <li>
-          <a href="collapsible.html">JavaScript</a>
-        </li>
-      </slot>
+      <NavBar logo="SpeedSul " url="/" cor="#424242 grey darken-3">
+        <slot name="links">
+          <li>
+            <a href="#/">Home</a>
+          </li>
+          <li>
+            <a href="#/login">Entrar</a>
+          </li>
+          <li>
+            <a href="collapsible.html">JavaScript</a>
+          </li>
+        </slot>
+      </NavBar>
     </header>
 
     <main>
