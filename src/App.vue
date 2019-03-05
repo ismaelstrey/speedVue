@@ -17,7 +17,7 @@
             <grid-vue tamanho ='8'>
               <span class="black-text">
                 <h5>Silvia J.</h5>
-                 Add the "circle" class to it to make it appear circular.
+                 Oi meu nome é.
               </span>
             </grid-vue>
           </div>
