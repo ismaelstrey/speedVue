@@ -3,9 +3,8 @@
   <div class="col s12 m6">
     <div class="card blue-grey darken-1">
       <div class="card-content white-text">
-        <span class="card-title">Card Title</span>
-        <p>I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively.</p>
+        <span class="card-title">HelloWorld</span>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae illo qui quisquam magnam, aliquid atque eos corporis neque earum beatae debitis facilis laudantium placeat libero cupiditate iure error fuga maiores.</p>
       </div>
       <div class="card-action">
         <a href="#">This is a link</a>
