@@ -1,19 +1,28 @@
 <template>
   <span id="app">
     <header>
-      <NavBar logo="SpeedSul " url="#" cor="#424242 grey darken-3"/>
+        <NavBar logo="SpeedSul " url="/" cor="#424242 grey darken-3">      
+          <li>
+            <router-link to="/">Home</router-link>
+            
+          </li>
+          <li>
+         <router-link to="/login">Entrar</router-link>
+          </li>  
+          <li>
+         <router-link to="/cadastro">Cadastre-se</router-link>
+          </li>   
+      </NavBar>
     </header>
 
     <main>
       <div class="container">
         <div class="row">
-          <grid-vue tamanho="8">
+          <grid-vue tamanho="8">            
             <slot name="menuesquerdo"/>
           </grid-vue>
-          <grid-vue tamanho="4">
-            <CardMenuVue>
-              <slot name="principal"/>
-            </CardMenuVue>
+          <grid-vue tamanho="4">            
+              <slot name="principal"/>            
           </grid-vue>
         </div>
       </div>
@@ -51,5 +60,10 @@ export default {
   }
 };
 </script>
+<style>
+  footer{
+    margin-top: 100px;
+  }
+</style>
 
 

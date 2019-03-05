@@ -1,18 +1,16 @@
 <template>
   <span id="app">
     <header>
-      <NavBar logo="SpeedSul " url="/" cor="#424242 grey darken-3">
-        <slot name="links">
-          <li>
-            <a href="#/">Home</a>
+      <NavBar logo="SpeedSul " url="/" cor="#424242 grey darken-3">      
+          <li>            
+            <router-link to="/"> Home</router-link>
           </li>
           <li>
-            <a href="#/login">Entrar</a>
+            <router-link to="/login">Entrar</router-link>
+          </li>   
+            <li>
+         <router-link to="/cadastro">Cadastre-se</router-link>
           </li>
-          <li>
-            <a href="collapsible.html">JavaScript</a>
-          </li>
-        </slot>
       </NavBar>
     </header>
 
@@ -63,5 +61,8 @@ export default {
   }
 };
 </script>
+<style>
+
+</style>
 
 

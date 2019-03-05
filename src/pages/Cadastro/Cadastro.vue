@@ -7,16 +7,15 @@
         alt="Background login"
       >
     </span>
-    
-    <span slot="principal">
-
-      <span v-if="!cadastro">
-          <h3 class="center">Login</h3>
+    <span slot="principal">     
+          <h3 class="center">Cadastro</h3>
           <input type="text" placeholder="E-mail">
-          <input type="password" placeholder="Senha">         
-          <button class="btn ">Entrar</button>
-          <router-link class="btn orange" to="/cadastro">Criar conta</router-link>  
-      </span>
+          <input type="password" placeholder="Senha">
+          <input type="password" placeholder="Confirme Sua senha">
+          <input type="text" placeholder="Nome">
+          <input type="text" placeholder="E-mail">
+          <button class="btn float-left">Enviar </button>
+           <router-link class="btn orange" to="/login">Logar</router-link>          
     </span>
   </LoginTemplate>
 </template>
@@ -25,9 +24,10 @@
 import LoginTemplate from "@/templates/LoginTemplate";
 
 export default {
-  name: "Login",
+  name: "Cadastro",
   data() {
     return {
+      
     };
   },
 
