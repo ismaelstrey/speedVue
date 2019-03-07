@@ -10,11 +10,11 @@
     
     <span slot="principal">
 
-      <span v-if="!cadastro">
+      <span>
           <h3 class="center">Login</h3>
-          <input type="text" placeholder="E-mail">
-          <input type="password" placeholder="Senha">         
-          <button class="btn ">Entrar</button>
+          <input type="text" placeholder="E-mail" v-model="usuario.email">
+          <input type="password" placeholder="Senha" v-model="usuario.password">         
+          <button class="btn " v-on:click="login()">Entrar</button>
           <router-link class="btn orange" to="/cadastro">Criar conta</router-link>  
       </span>
     </span>
@@ -23,18 +23,54 @@
 
 <script>
 import LoginTemplate from "@/templates/LoginTemplate";
+import axios from 'axios';
 
 export default {
   name: "Login",
   data() {
     return {
+      usuario: {email:'', password:''}
     };
   },
 
   components: {
     LoginTemplate
+  },
+ methods: {
+    login() {
+    console.log('ok');
+
+     axios.post(`http://127.0.0.1:8000/api/login`,{
+       email: this.usuario.email,
+       password: this.usuario.password
+     }).then(response => {
+      //  console.log(response)
+       if(response.data.token){
+        //  Login com sucesso
+        console.log('Login Com sucesso');
+        sessionStorage.setItem('usuario', JSON.stringify(response.data));
+        this.$router.push('/');
+       }else if(response.data.status == false){
+        // Login não existe
+        console.log('Login não existe');
+       }else{
+         console.log('Erros na validação');
+         let erros = '';
+         for (let erro of Object.values(response.data)){
+           erros += erro + " ";
+         }
+         alert(erros);
+       }
+     })
+      .catch(e=>{
+        console.log(e)
+        alert("Erro !Tente Novamente mais tarde")
+      })
+   
   }
-};
+  }
+ };
+
 </script>
 
 
