@@ -44,7 +44,7 @@ export default {
     cadastro() {
     console.log('Botão cadastro precionado');
 
-     axios.post(`http://127.0.0.1:8000/api/cadastro`,{
+     axios.post(`http://localhost:8000/api/cadastro`,{
        name: this.usuario.name,
        email: this.usuario.email,
        password: this.usuario.password,

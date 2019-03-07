@@ -1,0 +1,129 @@
+<template>
+  <SiteTemplate>
+    <span slot="menuesquerdo">
+      <img
+        src="https://www.huddle.com/sites/default/files/image/security-01.png"
+        class="responsive-img"
+        alt="Background login"
+      >
+    </span>
+    <span slot="principal">
+      <h3 class="center">Perfil {{}}</h3>
+
+      <input type="text" placeholder="Nome" v-model="usuario.name">
+      <input type="email" placeholder="E-mail" v-model="usuario.email">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>Imagem</span>
+          <input type="file">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+      <input type="password" placeholder="Senha" v-model="usuario.password">
+      <input
+        type="password"
+        placeholder="Confirme Sua senha"
+        v-model="usuario.password_confirmation"
+      >
+      
+      <button class="btn float-left" v-on:click="perfil()">Atualizar</button>
+    </span>
+  </SiteTemplate>
+</template>
+
+<script>
+import SiteTemplate from "@/templates/SiteTemplate";
+import axios from "axios";
+
+export default {
+  name: "Perfil",
+  data() {
+    return {
+      user: false,
+      usuario: {
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
+      }
+    };
+  },
+
+  components: {
+    SiteTemplate
+  },
+  created() {
+    console.log("Created");
+    let usuarioAux = sessionStorage.getItem("usuario");
+    if (usuarioAux) {
+      this.user = JSON.parse(usuarioAux);
+      this.usuario.name = this.user.name;
+      this.usuario.email = this.user.email;
+      this.usuario.password = this.user.password;
+      this.usuario.password_confirmation = this.user.password_confirmation;
+    }
+  },
+  methods: {
+    perfil() {
+      console.log("Botão cadastro precionado");
+
+      axios
+        .put(
+          `http://localhost:8000/api/perfil`,
+          {
+            name: this.usuario.name,
+            email: this.usuario.email,
+            password: this.usuario.password,
+            password_confirmation: this.usuario.password_confirmation
+          },
+          {
+            headers: { authorization: "Bearer " + this.user.token }
+          }
+        )
+        .then(response => {
+          console.log(response);
+          if (response.data) {
+            //  Cadastro realizado com sucesso
+            console.log(response.data);
+            sessionStorage.setItem("usuario", JSON.stringify(response.data));
+            alert("Perfil atualizado com sucesso");
+            this.$router.push("/perfil");
+          } else {
+            console.log("Erros na validação");
+            let erros = "";
+            for (let erro of Object.values(response.data)) {
+              erros += erro + " ";
+            }
+            alert(erros);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+          alert("Erro !Tente Novamente mais tarde");
+        });
+    }
+  }
+};
+</script>
+
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1,
+h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>

@@ -40,7 +40,7 @@ export default {
     login() {
     console.log('ok');
 
-     axios.post(`http://127.0.0.1:8000/api/login`,{
+     axios.post(`http://localhost:8000/api/login`,{
        email: this.usuario.email,
        password: this.usuario.password
      }).then(response => {
