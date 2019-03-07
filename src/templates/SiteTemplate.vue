@@ -2,7 +2,7 @@
   <span id="app">
     <header>
       <NavBar logo="SpeedSul " url="/" cor="#424242 grey darken-3">      
-          <li>            
+          <li v-if="usuario">            
             <router-link to="/"> Home</router-link>
           </li>
               <li v-if="!usuario">
@@ -76,12 +76,15 @@ export default {
     let usuarioAux = sessionStorage.getItem('usuario');
     if(usuarioAux){
       this.usuario = JSON.parse(usuarioAux);
+    }else{
+      this.$router.push('/login')
     }
   },
   methods: {
     sair(){
         sessionStorage.clear();
         this.usuario = false;
+        this.$router.push('/login')
       }
   }
 };

@@ -2,7 +2,7 @@
   <span id="app">
     <header>
         <NavBar logo="SpeedSul " url="/" cor="#424242 grey darken-3">      
-          <li>
+          <li v-if="usuario">
             <router-link to="/">Home</router-link>
             
           </li>
