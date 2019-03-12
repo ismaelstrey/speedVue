@@ -2,20 +2,29 @@
   <SiteTemplate>
     <span slot="menuesquerdo">
       <img
-        src="https://www.huddle.com/sites/default/files/image/security-01.png"
+        :src="user.image"        
         class="responsive-img"
         alt="Background login"
       >
+      <hr>
+      <span v-if="this.usuario.image">
+        <strong>Nova</strong>
+      <img
+        :src="this.usuario.image"        
+        class="responsive-img"
+        alt="this.usuario.name"
+      >
+      </span>
     </span>
     <span slot="principal">
-      <h3 class="center">Perfil {{}}</h3>
+      <h3 class="center">{{usuario.name}}</h3>
 
       <input type="text" placeholder="Nome" v-model="usuario.name">
       <input type="email" placeholder="E-mail" v-model="usuario.email">
       <div class="file-field input-field">
         <div class="btn">
           <span>Imagem</span>
-          <input type="file">
+          <input type="file" v-on:change="enviaImagem">
         </div>
         <div class="file-path-wrapper">
           <input class="file-path validate" type="text">
@@ -46,7 +55,8 @@ export default {
         name: "",
         email: "",
         password: "",
-        password_confirmation: ""
+        password_confirmation: "",
+        image: ""
       }
     };
   },
@@ -55,7 +65,6 @@ export default {
     SiteTemplate
   },
   created() {
-    console.log("Created");
     let usuarioAux = sessionStorage.getItem("usuario");
     if (usuarioAux) {
       this.user = JSON.parse(usuarioAux);
@@ -63,9 +72,23 @@ export default {
       this.usuario.email = this.user.email;
       this.usuario.password = this.user.password;
       this.usuario.password_confirmation = this.user.password_confirmation;
+     
     }
   },
   methods: {
+    enviaImagem(e){
+      let arquivo = e.target.files || e.dataTranfer.files;
+      if(!arquivo.length){
+        return;
+      }
+      let reader = new FileReader();
+
+      reader.onload = e => {
+      this.usuario.image = e.target.result;
+      };
+      reader.readAsDataURL(arquivo[0]);
+     
+    },
     perfil() {
       console.log("Botão cadastro precionado");
 
@@ -76,7 +99,8 @@ export default {
             name: this.usuario.name,
             email: this.usuario.email,
             password: this.usuario.password,
-            password_confirmation: this.usuario.password_confirmation
+            password_confirmation: this.usuario.password_confirmation,
+            image: this.usuario.image
           },
           {
             headers: { authorization: "Bearer " + this.user.token }
@@ -87,7 +111,11 @@ export default {
           if (response.data) {
             //  Cadastro realizado com sucesso
             console.log(response.data);
-            sessionStorage.setItem("usuario", JSON.stringify(response.data));
+             this.user = response.data;
+            sessionStorage.setItem("usuario", JSON.stringify(this.user));
+            console.log(response.data);
+            this.usuario.image = false;
+      console.log('teste false');
             alert("Perfil atualizado com sucesso");
             this.$router.push("/perfil");
           } else {
