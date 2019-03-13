@@ -3,16 +3,19 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <img
+          <span v-if="usuario.image">
+             <img
             :src="usuario.image"
             :alt="usuario.name"
             class="circle responsive-img"
           >
+          </span>
+         
           <!-- notice the "circle" class -->
         </grid-vue>
         <grid-vue tamanho="8">
           <span class="black-text">
-            <h5>{{usuario.name}}</h5>
+            <h5 v-if="usuario.name">{{usuario.name}}</h5>
           </span>
         </grid-vue>
       </div>
@@ -50,9 +53,9 @@ export default {
   },created() {
     let usuarioAux = sessionStorage.getItem("usuario");
     if (usuarioAux) {
-      this.usuario = JSON.parse(usuarioAux);
-    
-     
+      this.usuario = JSON.parse(usuarioAux);  
+    }else{
+      this.$router.push('/login')
     }
   },
 

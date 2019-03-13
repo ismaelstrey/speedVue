@@ -1,11 +1,20 @@
 <template>
   <SiteTemplate>
     <span slot="menuesquerdo">
+      <span v-if="user.image">
       <img
         :src="user.image"        
         class="responsive-img"
         alt="Background login"
       >
+      </span>
+      <span v-else>
+          <img
+        src="https://www.cyana.nl/images/UserFotos/Nieuws/avatar.jpg"        
+        class="responsive-img"
+        alt="Background login"
+      >
+      </span>
       <hr>
       <span v-if="this.usuario.image">
         <strong>Nova</strong>

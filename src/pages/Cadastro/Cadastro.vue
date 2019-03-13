@@ -9,10 +9,10 @@
     </span>
     <span slot="principal">     
           <h3 class="center">Cadastro</h3>
-          <input type="text" placeholder="Nome" v-model="usuario.name">
-          <input type="email" placeholder="E-mail" v-model="usuario.email">
-          <input type="password" placeholder="Senha" v-model="usuario.password">
-          <input type="password" placeholder="Confirme Sua senha" v-model="usuario.password_confirmation">
+          <input type="text" placeholder="Nome" autocomplete="username nome" v-model="usuario.name">
+          <input type="email" placeholder="E-mail" autocomplete="email e-mail" v-model="usuario.email">
+          <input type="password" placeholder="Senha" autocomplete="off" v-model="usuario.password">
+          <input type="password" placeholder="Confirme Sua senha" autocomplete="off" v-model="usuario.password_confirmation">
           <button class="btn float-left" v-on:click="cadastro()">Enviar </button>
            <router-link class="btn orange" to="/login">Logar</router-link>          
     </span>

@@ -25,7 +25,13 @@
         <div class="row">
           <grid-vue tamanho="4">
             <CardMenuVue>
-              <slot name="menuesquerdo"/>
+               <slot name="menuesquerdo"/>
+            </CardMenuVue>
+            <CardMenuVue>
+              <h3>Amigos</h3>
+              <li>João</li>
+              <li>Bernardo</li>
+              <li>Silvano</li>
             </CardMenuVue>
           </grid-vue>
           <grid-vue tamanho="8">
