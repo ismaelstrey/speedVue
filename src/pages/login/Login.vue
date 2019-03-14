@@ -11,13 +11,13 @@
     <span slot="principal">
 
       <span>
-        <form>
+        
           <h3 class="center">Login</h3>
-          <input type="text" placeholder="E-mail" autocomplete="email" v-model="usuario.email">
-          <input type="password" placeholder="Senha" autocomplete="current-password" v-model="usuario.password">         
+          <input type="text" placeholder="E-mail" v-model="usuario.email">
+          <input type="password" placeholder="Senha" v-model="usuario.password">         
           <button class="btn " v-on:click="login()">Entrar</button>
           <router-link class="btn orange" to="/cadastro">Criar conta</router-link>  
-        </form>
+       
       </span>
     </span>
   </LoginTemplate>

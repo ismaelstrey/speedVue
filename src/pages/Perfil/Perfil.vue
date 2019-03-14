@@ -44,8 +44,7 @@
         type="password"
         placeholder="Confirme Sua senha"
         v-model="usuario.password_confirmation"
-      >
-      
+      >      
       <button class="btn float-left" v-on:click="perfil()">Atualizar</button>
     </span>
   </SiteTemplate>
@@ -53,6 +52,7 @@
 
 <script>
 import SiteTemplate from "@/templates/SiteTemplate";
+import Swal from 'sweetalert2';
 import axios from "axios";
 
 export default {
@@ -97,7 +97,15 @@ export default {
       };
       reader.readAsDataURL(arquivo[0]);
      
-    },
+    }, 
+    message(title,type) {
+    Swal.fire({
+        title: title,
+        type: type, 
+        showConfirmButton: false,
+        timer: 1500
+    });
+},
     perfil() {
       console.log("Botão cadastro precionado");
 
@@ -124,8 +132,8 @@ export default {
             sessionStorage.setItem("usuario", JSON.stringify(this.user));
             console.log(response.data);
             this.usuario.image = false;
-      console.log('teste false');
-            alert("Perfil atualizado com sucesso");
+      console.log('teste false');            
+            this.message('Perfil atualizado com sucesso!!!','success');
             this.$router.push("/perfil");
           } else {
             console.log("Erros na validação");
@@ -145,22 +153,3 @@ export default {
 };
 </script>
 
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
