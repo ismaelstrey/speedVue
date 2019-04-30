@@ -56,22 +56,25 @@ export default {
         })
         .then(response => {
           console.log(response);
-          if (response.data.token) {
+          if (response.data.status) {
             //  Cadastro realizado com sucesso
             console.log("Cadastro realizado com sucesso");
-            sessionStorage.setItem("usuario", JSON.stringify(response.data));
+            sessionStorage.setItem(
+              "usuario",
+              JSON.stringify(response.data.usuario)
+            );
             this.$router.push("/");
-          } else if (response.data.status == false) {
-            // Erro ao cadatrar usuario
-            console.log("Erro ao cadatrar usuario");
-            alert("Erro ao cadastrar! Tente mais tarde");
-          } else {
+          } else if (response.data.status == false && response.data.validacao) {
             console.log("Erros na validação");
             let erros = "";
-            for (let erro of Object.values(response.data)) {
+            for (let erro of Object.values(response.data.erros)) {
               erros += erro + " ";
             }
             alert(erros);
+          } else {
+            // Erro ao cadatrar usuario
+            console.log("Erro ao cadatrar usuario");
+            alert("Erro ao cadastrar! Tente mais tarde");
           }
         })
         .catch(e => {

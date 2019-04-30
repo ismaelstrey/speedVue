@@ -45,21 +45,25 @@ export default {
         })
         .then(response => {
           //  console.log(response)
-          if (response.data.token) {
+          if (response.data.status) {
             //  Login com sucesso
             console.log("Login Com sucesso");
-            sessionStorage.setItem("usuario", JSON.stringify(response.data));
+            sessionStorage.setItem(
+              "usuario",
+              JSON.stringify(response.data.usuario)
+            );
             this.$router.push("/");
-          } else if (response.data.status == false) {
-            // Login não existe
-            console.log("Login não existe");
-          } else {
+          } else if (response.data.status == false && response.data.validacao) {
+            // "Erros na validação"
             console.log("Erros na validação");
             let erros = "";
-            for (let erro of Object.values(response.data)) {
+            for (let erro of Object.values(response.data.erros)) {
               erros += erro + " ";
             }
             alert(erros);
+          } else {
+            console.log("login Não existe");
+            alert("Login Inválido");
           }
         })
         .catch(e => {
