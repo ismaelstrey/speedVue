@@ -2,27 +2,19 @@
   <SiteTemplate>
     <span slot="menuesquerdo">
       <span v-if="user.image">
-      <img
-        :src="user.image"        
-        class="responsive-img"
-        alt="Background login"
-      >
+        <img :src="user.image" class="responsive-img" alt="Background login">
       </span>
       <span v-else>
-          <img
-        src="https://www.cyana.nl/images/UserFotos/Nieuws/avatar.jpg"        
-        class="responsive-img"
-        alt="Background login"
-      >
+        <img
+          src="https://www.cyana.nl/images/UserFotos/Nieuws/avatar.jpg"
+          class="responsive-img"
+          alt="Background login"
+        >
       </span>
       <hr>
       <span v-if="this.usuario.image">
         <strong>Nova</strong>
-      <img
-        :src="this.usuario.image"        
-        class="responsive-img"
-        alt="this.usuario.name"
-      >
+        <img :src="this.usuario.image" class="responsive-img" alt="this.usuario.name">
       </span>
     </span>
     <span slot="principal">
@@ -44,7 +36,7 @@
         type="password"
         placeholder="Confirme Sua senha"
         v-model="usuario.password_confirmation"
-      >      
+      >
       <button class="btn float-left" v-on:click="perfil()">Atualizar</button>
     </span>
   </SiteTemplate>
@@ -52,8 +44,7 @@
 
 <script>
 import SiteTemplate from "@/templates/SiteTemplate";
-import Swal from 'sweetalert2';
-import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "Perfil",
@@ -81,37 +72,35 @@ export default {
       this.usuario.email = this.user.email;
       this.usuario.password = this.user.password;
       this.usuario.password_confirmation = this.user.password_confirmation;
-     
     }
   },
   methods: {
-    enviaImagem(e){
+    enviaImagem(e) {
       let arquivo = e.target.files || e.dataTranfer.files;
-      if(!arquivo.length){
+      if (!arquivo.length) {
         return;
       }
       let reader = new FileReader();
 
       reader.onload = e => {
-      this.usuario.image = e.target.result;
+        this.usuario.image = e.target.result;
       };
       reader.readAsDataURL(arquivo[0]);
-     
-    }, 
-    message(title,type) {
-    Swal.fire({
+    },
+    message(title, type) {
+      Swal.fire({
         title: title,
-        type: type, 
+        type: type,
         showConfirmButton: false,
         timer: 1500
-    });
-},
+      });
+    },
     perfil() {
       console.log("Botão cadastro precionado");
 
-      axios
+      this.$http
         .put(
-          `http://localhost:8000/api/perfil`,
+          this.$urlAPI + `perfil`,
           {
             name: this.usuario.name,
             email: this.usuario.email,
@@ -128,12 +117,12 @@ export default {
           if (response.data) {
             //  Cadastro realizado com sucesso
             console.log(response.data);
-             this.user = response.data;
+            this.user = response.data;
             sessionStorage.setItem("usuario", JSON.stringify(this.user));
             console.log(response.data);
             this.usuario.image = false;
-      console.log('teste false');            
-            this.message('Perfil atualizado com sucesso!!!','success');
+            console.log("teste false");
+            this.message("Perfil atualizado com sucesso!!!", "success");
             this.$router.push("/perfil");
           } else {
             console.log("Erros na validação");

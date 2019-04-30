@@ -7,17 +7,14 @@
         alt="Background login"
       >
     </span>
-    
-    <span slot="principal">
 
+    <span slot="principal">
       <span>
-        
-          <h3 class="center">Login</h3>
-          <input type="text" placeholder="E-mail" v-model="usuario.email">
-          <input type="password" placeholder="Senha" v-model="usuario.password">         
-          <button class="btn " v-on:click="login()">Entrar</button>
-          <router-link class="btn orange" to="/cadastro">Criar conta</router-link>  
-       
+        <h3 class="center">Login</h3>
+        <input type="text" placeholder="E-mail" v-model="usuario.email">
+        <input type="password" placeholder="Senha" v-model="usuario.password">
+        <button class="btn" v-on:click="login()">Entrar</button>
+        <router-link class="btn orange" to="/cadastro">Criar conta</router-link>
       </span>
     </span>
   </LoginTemplate>
@@ -25,54 +22,53 @@
 
 <script>
 import LoginTemplate from "@/templates/LoginTemplate";
-import axios from 'axios';
 
 export default {
   name: "Login",
   data() {
     return {
-      usuario: {email:'', password:''}
+      usuario: { email: "", password: "" }
     };
   },
 
   components: {
     LoginTemplate
   },
- methods: {
+  methods: {
     login() {
-    console.log('ok');
+      console.log("ok");
 
-     axios.post(`http://localhost:8000/api/login`,{
-       email: this.usuario.email,
-       password: this.usuario.password
-     }).then(response => {
-      //  console.log(response)
-       if(response.data.token){
-        //  Login com sucesso
-        console.log('Login Com sucesso');
-        sessionStorage.setItem('usuario', JSON.stringify(response.data));
-        this.$router.push('/');
-       }else if(response.data.status == false){
-        // Login não existe
-        console.log('Login não existe');
-       }else{
-         console.log('Erros na validação');
-         let erros = '';
-         for (let erro of Object.values(response.data)){
-           erros += erro + " ";
-         }
-         alert(erros);
-       }
-     })
-      .catch(e=>{
-        console.log(e)
-        alert("Erro !Tente Novamente mais tarde")
-      })
-   
+      this.$http
+        .post(this.$urlAPI + `login`, {
+          email: this.usuario.email,
+          password: this.usuario.password
+        })
+        .then(response => {
+          //  console.log(response)
+          if (response.data.token) {
+            //  Login com sucesso
+            console.log("Login Com sucesso");
+            sessionStorage.setItem("usuario", JSON.stringify(response.data));
+            this.$router.push("/");
+          } else if (response.data.status == false) {
+            // Login não existe
+            console.log("Login não existe");
+          } else {
+            console.log("Erros na validação");
+            let erros = "";
+            for (let erro of Object.values(response.data)) {
+              erros += erro + " ";
+            }
+            alert(erros);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+          alert("Erro !Tente Novamente mais tarde");
+        });
+    }
   }
-  }
- };
-
+};
 </script>
 
 
