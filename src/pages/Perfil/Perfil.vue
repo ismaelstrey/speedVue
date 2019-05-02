@@ -96,7 +96,7 @@ export default {
       });
     },
     perfil() {
-      console.log("Botão cadastro precionado");
+      // console.log("Botão cadastro precionado");
 
       this.$http
         .put(
@@ -113,21 +113,21 @@ export default {
           }
         )
         .then(response => {
-          console.log(response);
-          if (response.data) {
+          // console.log(response);
+          if (response.data.status) {
             //  Cadastro realizado com sucesso
-            console.log(response.data);
-            this.user = response.data;
+            // console.log(response.data.usuario);
+            this.user = response.data.usuario;
             sessionStorage.setItem("usuario", JSON.stringify(this.user));
-            console.log(response.data);
+            // console.log(response.data);
             this.usuario.image = false;
-            console.log("teste false");
+            // console.log("teste false");
             this.message("Perfil atualizado com sucesso!!!", "success");
             this.$router.push("/perfil");
-          } else {
-            console.log("Erros na validação");
+          } else if (response.data.status == false && response.data.validacao){
+            // console.log("Erros na validação");
             let erros = "";
-            for (let erro of Object.values(response.data)) {
+            for (let erro of Object.values(response.data.erros)) {
               erros += erro + " ";
             }
             alert(erros);

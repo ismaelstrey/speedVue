@@ -7,7 +7,7 @@ import axios from "axios";
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
-Vue.prototype.$urlAPI = "http://speedsul.com/api/";
+Vue.prototype.$urlAPI = "http://localhost:8000/api/";
 
 /* eslint-disable no-new */
 new Vue({

@@ -29,6 +29,11 @@ export default {
   },
   components: {
     GridVue
+  },
+  methods:{
+    addConteudo(){
+      console.log("ok");
+    }
   }
 };
 </script>
