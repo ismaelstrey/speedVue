@@ -48,12 +48,17 @@ export default {
   name: "Home",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      usuario: {
+        name: "",
+        image: "",
+        token: ""
+      }
+
     };
   },created() {
-    let usuarioAux = sessionStorage.getItem("usuario");
+    let usuarioAux = this.$store.getters.getUsuario;
     if (usuarioAux) {
-      this.usuario = JSON.parse(usuarioAux);  
+      this.usuario = this.$store.getters.getUsuario;
     }else{
       this.$router.push('/login')
     }

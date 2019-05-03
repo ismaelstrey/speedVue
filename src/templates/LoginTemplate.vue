@@ -14,10 +14,7 @@
           </li>
           <li v-if="usuario">
          <router-link to="/perfil">{{usuario.name}}</router-link>
-          </li>  
-          <li v-if="usuario">
-         <a v-on:click="sair()">Sair</a>
-          </li>  
+          </li> 
       </NavBar>
     </header>
 
@@ -72,19 +69,12 @@ export default {
   },
   created(){
     console.log('Created');
-    let usuarioAux = sessionStorage.getItem('usuario');
+    let usuarioAux = this.$store.getters.getUsuario;
     if(usuarioAux){
-      this.usuario = JSON.parse(usuarioAux);
+      this.usuario = this.$store.getters.getUsuario;
       this.$router.push('/');
     }
-  },
-  methods: {
-    sair(){
-        sessionStorage.clear();
-        this.usuario = false;
-      }
-  }
-  
+  }  
 }
 </script>
 <style>

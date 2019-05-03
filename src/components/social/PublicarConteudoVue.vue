@@ -1,17 +1,20 @@
 <template>
   <div class="row">
     <GridVue class="input-field" tamanho="12">
-      <textarea v-model="conteudo" id="conteudoID" class="materialize-textarea"></textarea>
-      <label v-if="!conteudo">O quê está acontecendo?</label>
+      <input type="text" v-model="conteudo.titulo">
+      <textarea v-if="conteudo.titulo" placeholder="Conteudo" v-model="conteudo.texto" id="conteudoID" class="materialize-textarea"></textarea>
+      <input v-if="conteudo.titulo && conteudo.texto" placeholder="Link:"  type="text" v-model="conteudo.link">
+      <input v-if="conteudo.titulo && conteudo.texto" placeholder="Url da Imagem" type="text" v-model="conteudo.img">
+      <label>O que está acontecendo?</label>
     </GridVue>
-    <p>
-      <GridVue
+    <p v-if="conteudo.texto" class="right-align">
+      <button
+        @click="addConteudo"
         v-if="conteudo"
-        class="btn-floating waves-effect waves-light red col s"
-        tamanho="1 offset-s11"
+        class="btn waves-effect waves-light circle default"
       >
         <i class="material-icons">send</i>
-      </GridVue>
+      </button>
     </p>
   </div>
 </template>
@@ -24,7 +27,12 @@ export default {
   props: [],
   data() {
     return {
-      conteudo: ""
+      conteudo: {
+        titulo:'',
+        texto:'',
+        link:'',
+        img:''
+      }
     };
   },
   components: {
@@ -32,7 +40,17 @@ export default {
   },
   methods:{
     addConteudo(){
-      console.log("ok");
+      console.log(this.conteudo);
+    this.$http.post(this.$urlAPI+`conteudo/adicionar`,this.conteudo,{
+      headers: { authorization: "Bearer " + this.$store.getters.getToken }
+    }).then(response=>{
+      if(response.data.status){
+        console.log(response.data.conteudos);
+      }
+    }).catch(e =>{
+      console.log(e);
+      alert("Erro! Tente mais Tarde");
+    })
     }
   }
 };

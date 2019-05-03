@@ -65,9 +65,9 @@ export default {
     SiteTemplate
   },
   created() {
-    let usuarioAux = sessionStorage.getItem("usuario");
+    let usuarioAux = this.$store.getters.getUsuario;
     if (usuarioAux) {
-      this.user = JSON.parse(usuarioAux);
+      this.user = this.$store.getters.getUsuario;
       this.usuario.name = this.user.name;
       this.usuario.email = this.user.email;
       this.usuario.password = this.user.password;
@@ -109,23 +109,18 @@ export default {
             image: this.usuario.image
           },
           {
-            headers: { authorization: "Bearer " + this.user.token }
+            headers: { authorization: "Bearer " + this.$store.getters.getToken }
           }
         )
         .then(response => {
-          // console.log(response);
           if (response.data.status) {
-            //  Cadastro realizado com sucesso
-            // console.log(response.data.usuario);
             this.user = response.data.usuario;
+            this.$store.commit('setUsuario', response.data.usuario);
             sessionStorage.setItem("usuario", JSON.stringify(this.user));
-            // console.log(response.data);
             this.usuario.image = false;
-            // console.log("teste false");
             this.message("Perfil atualizado com sucesso!!!", "success");
             this.$router.push("/perfil");
           } else if (response.data.status == false && response.data.validacao){
-            // console.log("Erros na validação");
             let erros = "";
             for (let erro of Object.values(response.data.erros)) {
               erros += erro + " ";
